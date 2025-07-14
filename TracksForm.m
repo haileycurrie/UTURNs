@@ -1,5 +1,5 @@
 %% Format tracks from the trackmate output .xml into cell arrays
-%function to 
+% function to 
 % 1. filter tracks that are too short to analyze
 % 2. zero the tracks data to common origin (output disps),
 % 3. calculate and save (unscaled) velocities into tracks.
@@ -13,9 +13,8 @@
 % 
 % OUTPUTS:
 %
-%   tracks: cell array, one cell for each track. Each track contains 7
-%       columns, in order: frame (t), x pos, y pos, track ID, dx, dy,
-%       smoothed dy (for gifmark)
+%   tracks: cell array, one cell for each track. Each track contains 6
+%       columns, in order: frame (t), x pos, y pos, track ID, dx, dy
 %
 %   disps: tracks{:,1}(:,1:4) subtracting initial x y position, so that each track begins at
 %       (0,0). (mainly for Hairball)
