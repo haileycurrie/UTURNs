@@ -41,27 +41,25 @@ I=find(cellfun(@length,tracks)>mindur);
 tracks=tracks(I);
 
 
-%create disps: set initial (x,y)=(0,0) for each track (a la hairball)
+%set initial (x,y)=(0,0) f(a la hairball)
 disps=tracks;
-for i=1:size(tracks,1) %iterate over each track in the cell array
-    %subtract first value in x from x positions in column 2
+for i=1:size(tracks,1)
+    %subtract first value in x from column 2
     disps{i,1}(:,2)=disps{i,1}(:,2)-disps{i,1}(1,2);
-    %subtract first value in y from y positions in column 3
+    %subtract first value in y from column 3
     disps{i,1}(:,3)=disps{i,1}(:,3)-disps{i,1}(1,3);
-    
-    %calculate frame-frame x and y displacements (velocity in px/frame)
-    for f=2:length(disps{i,1}(:,1)) %iterate over frames of track i
+    %iterate over frames of track i
+    for f=2:length(disps{i,1}(:,1))
         %calculate steps in x and y in column 5 and 6 ("velocity" in px/frame)
         tracks{i,1}(1,5)=0;
         tracks{i,1}(f,5)=disps{i,1}(f,2)-disps{i,1}(f-1,2);
         tracks{i,1}(1,6)=0;
         tracks{i,1}(f,6)=disps{i,1}(f,3)-disps{i,1}(f-1,3);
-        
-        % %smooth velocity by averaging over past 3 frames
-        % tracks{i,1}(1:4,7)=0;
-        % if f>4
-        % tracks{i,1}(f,7)=mean(tracks{i,1}(f-3:f,6));
-        % end
+        %smooth velocity by averaging over past 3 frames
+        tracks{i,1}(1:4,7)=0;
+        if f>4
+        tracks{i,1}(f,7)=mean(tracks{i,1}(f-3:f,6));
+        end
     end
 end
 
