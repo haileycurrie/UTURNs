@@ -1,5 +1,5 @@
 %% Plot tracks/disps as a hairball
-% Note subsets of tracks and disps may be fed in to compare a few tracks of
+% Note subsets of disps may be fed in to compare a few tracks of
 % interest or declutter the plot.
 %
 % INPUTS:
