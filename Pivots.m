@@ -29,7 +29,7 @@
 %       columns, in order: frame (t), x pos, y pos, track ID, dx, dy
 %
 %   disps: output by TracksForm: tracks{:,1}(:,1:4) subtracting initial x y position, so that each track begins at
-%       (0,0). (mainly for Hairball)
+%       (0,0).
 %
 %   form: choice of method. For a., enter df as an integer to select the
 %       range of frames to include in the pivot. For b., enter 'distance'
@@ -41,8 +41,14 @@
 % 
 % OUTPUTS:
 %
-% pivots:
+%   pivots: disps array truncated to the pivot rows: cell array, one cell 
+%       for each track. Each track contains 4 columns, in order: frame (t), 
+%       x pos, y pos, track ID.
 % 
+%
+%Hailey Currie
+%Summer 2025
+%
 
 
 function [pivots]=Pivots(tracks,disps,form,prior)

@@ -1,7 +1,7 @@
 %% Function to mark original image with blue/red dots for a down/up tracks
 % For visualizing up/down tracks overlaid on original images. Colored dots
-% for tracks and quiver/lines showing frame-frame velocity.
-% More optimized than gifMark (thanks chatGPT), but still SLOW.
+% for tracks and quiver/lines showing 
+% More optimized than gifMark, but still SLOW.
 %
 %
 % INPUTS:

@@ -17,7 +17,7 @@
 %       columns, in order: frame (t), x pos, y pos, track ID, dx, dy
 %
 %   disps: tracks{:,1}(:,1:4) subtracting initial x y position, so that each track begins at
-%       (0,0). (mainly for Hairball)
+%       (0,0).
 %
 %
 %Hailey Currie
