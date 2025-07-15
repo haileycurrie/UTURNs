@@ -37,7 +37,7 @@ function [fig]=TilePlot(CropOpt,df,trackset,tracks,disps)
 if CropOpt=='N'
     %Plot a set of neighbors
     fig=figure
-    d=ceil(sqrt(length(trackset))); %square tile layout dimensions (round up)
+    d=ceil(sqrt(length(trackset))); %tile layout dimensions (round up)
     tiledlayout(d,d,"TileSpacing", "compact");
     
     
@@ -52,7 +52,7 @@ if CropOpt=='N'
                  'EdgeColor', 'interp', ...  % Use interpolated color for edges
                  'LineWidth', 2);
         
-        lab=string(j); %lebel each track with the index/trackID given by trackset
+        lab=string(j);
         title(lab)
         view(2);   % Default 2-D view
         colorbar;  % Add a colorbar
@@ -60,7 +60,6 @@ if CropOpt=='N'
         
         yline(0)
         xline(0)
-        axis equal
     end
 elseif CropOpt=='Y'
 
@@ -92,8 +91,6 @@ elseif CropOpt=='Y'
         view(2);   % Default 2-D view
         colorbar;  % Add a colorbar
         colormap('jet')
-        yline(0)
-        xline(0)
         %ylim([-20 20])
         %xlim([-10 10])
         axis equal
