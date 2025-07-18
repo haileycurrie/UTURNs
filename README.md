@@ -38,10 +38,22 @@ After the experiment, I rotate each image as needed to align the tissue and E fi
     - salient neighbors
     - speed
 
-  ## Current Useful Scripts in this Repository
+## Current Useful Scripts in this Repository
   - **TracksForm**: format tracks, filter out very short track fragments
   - **Hairball**: create hairball plot of cell tracks
   - **Pivots**: isolate the pivot section of cell tracks
   - **gifMark**: plot tracks onto original image for visualization purposes
   - **UDgifMark2**: plot like gifMark but tracks are color coded up/down
   - **TilePlot**: plot a tiled layout of tracks
+ 
+
+## Dependencies
+- Ensure your FIJI installation has an up to date version of (TrackMate)[https://imagej.net/plugins/trackmate/]. Add FIJI to your MATLAB path to call the importTrackMateTracks function (in TracksForm.m).
+
+
+
+## Notes/Request for suggestions:
+- **Mindur**: mindur, input to tracksform, is a somewhat arbitrary value. The goal is to screen out fragmentary tracks/tracks that do not include the turn/pivot period. There are plenty of other ways to acheive/refine this, eg. requiring the initial frame in a track to be x frames before the stim change frame, etc. If you think of an efficient and more fool-proof way, I'm all ears. : )
+- **Tracksform.m**: Because each track may be a different duration, MATLAB has to pass it as a cell array, which is capable of holding matrices of different sizes in one object, but cannot be vectorized for efficiency the way multidimensional matrices can. Because of this, my code includes a lot of sort of clunky for loops. I'm extremely open to suggestions on this front. I have heard Python allows for "ragged arrays" which may be a good solution, but I am not very familiar. Also, apparently, MATLAB's cellfun function is not typically faster than a for loop (according to some mathworks forum users), and is only a simpler way to write the code which I use when convenient but doesn't solve the efficiency problem.
+- **Hairball.m**: Also because each track is stored as a matrix cell in a cell array, Hairball.m plots each track one at a time in a for-loop, and it _interpolates a different color bar/scaling for each track_. As a result, data for different cells on the same frame may appear, misleadingly, different colors.
+- **Pivots**: There are plenty of ways you might classify an up/down turn, and I'm open to better algorithms. Some considerations: 1. Tracks may loop back on themselves after the turn is "complete". These self-intersection events may occur at different times for different cells or not at all. So, one must be thoughful about how many frames before/after the turn to analyze as the "turn". 2. What is means for a turn to _be_ complete is an open question. For this reason just using the displacement in y doesn't work without some extra thought. Maybe the direction of instantaneous y velocity at the peak/apex of the turn would be just as well. Maybe a global time scale should be set by using PIV to determine when global order in x is re-established. Currently, I've just been using an arbitrary number of frames before/after the pivot point, which isn't particularly rigorous. 3. 
