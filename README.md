@@ -12,7 +12,8 @@ I attach the CORGI to a programmable power source created by Yubin Lin to apply 
 - imaging:
   
 I set up imaging at 10x magnification in phase contrast, using stitching to capture each tissue fully. I capture every 2.5 minutes.
-- image processing
+- image processing:
+  
 After the experiment, I rotate each image as needed to align the tissue and E field bases (which should be aligned during assembly) with the image xy basis and crop to remove background. 
 - - cellpose:
     
