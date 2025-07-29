@@ -25,20 +25,9 @@
 %Summer 2025
 %
 
-function [out]=UDmasks(labelstif,savedirectory,tracks,ups,downs)
+function [out]=UDmasks(uturntif,savedirectory,tracks,ups,downs)
 
-labels=tiffreadVolume(labelstif);
-
-folder1=fullfile(savedirectory,'uplabels');
-folder2=fullfile(savedirectory,'downlabels');
-
-% Check if the directory exists
-if ~exist(folder1, 'dir')
-    mkdir(folder1); % Create the directory if it does not exist
-end
-if ~exist(folder2, 'dir')
-    mkdir(folder2); % Create the directory if it does not exist
-end
+labels=tiffreadVolume(uturntif);
 
 %% convert ups and downs track indices to label tags
 upvalues=zeros(1,length(ups));
@@ -59,7 +48,7 @@ for i=1:size(labels,3)
     uplabels=labels(:,:,i).*upmask;
     uplabels=uint32(uplabels);
     %write tiff to stack
-    lab="/uplabels/"+string(labelstif)+string(i);
+    lab="uplabels"+string(uturntif)+string(i);
     fullpath=fullfile(savedirectory,lab);
     tup=Tiff(fullpath,"w");
     setTag(tup,"Photometric",Tiff.Photometric.MinIsBlack)
@@ -77,7 +66,7 @@ for i=1:size(labels,3)
     downlabels=labels(:,:,i).*downmask;
     downlabels=uint32(downlabels);
     %write tiff to stack
-    lab="/downlabels/"+string(labelstif)+string(i);
+    lab="downlabels"+string(uturntif)+string(i);
     fullpath=fullfile(savedirectory,lab);
     tdown=Tiff(fullpath,"w");
     setTag(tdown,"Photometric",Tiff.Photometric.MinIsBlack)

@@ -27,14 +27,14 @@
 %Summer 2025
 %
 
-function [ups, downs,fig]=UDclasser(pivots,trackset,plt)
+function [ups, downs]=UDclasser(pivots,trackset,plt)
 
 %trackset=1:length(tracks);
 %plt=0
 
 
 if plt==1
-    fig=figure
+    fig=figure;
     d=ceil(sqrt(length(trackset))); %tile layout dimensions (round up)
     tiledlayout(d,d);
 end
