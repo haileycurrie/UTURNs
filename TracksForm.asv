@@ -41,7 +41,7 @@
 %Hailey Currie
 %Summer 2025
 %
-function [tracks, disps]=TracksForm(filename,varargin)
+function [tracks, disps]=TracksForm(filename,mindur,stimstart,varargin)
 
 %% Input Parser
 %Input parser efficiently sets defaults for inputs and checks if given
@@ -52,6 +52,8 @@ p = inputParser;
 
 % For doing various checks on the inputs
 valid_positive_integer = @(x) isnumeric(x) && isscalar(x) && (x > 0) && (mod(x,1)<eps); % last check enforces integer
+% valid_positive_integer_array = @(x) isnumeric(x)  && sum(x > 0)==length(x) && sum((mod(x,1)<eps))==length(x); % last check enforces integer
+%valid_positive_number = @(x) isnumeric(x) && isscalar(x) && (x > 0);
 
 %Optional labels files for label tagging. These are positional
 %and must come before other optional variables. NOT passed in the same way
@@ -101,6 +103,7 @@ end
 %% crop at stimstart
 
 for i=1:length(tracks)
+    tracks{i,1}(:,4)=i; 
     tracks{i,1}=tracks{i,1}((stimstart+1):end,:); %crop pre-stim control (set stimstart to 0 to include control in analysis)
 end
 
