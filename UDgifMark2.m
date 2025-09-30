@@ -70,6 +70,7 @@ for t = 2:size(uturn,3)
             v = tracks{ind,1}(frame,6);
             scatter(x, y, 20, 'r', 'filled');
             quiver(x, y, u, v, 3, 'r');
+
             %text(x, y, num2str(ind), 'Vert','bottom', 'Horiz','left', 'FontSize',5);
         end
     end
