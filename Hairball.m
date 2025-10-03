@@ -36,6 +36,7 @@ for i=1:length(disps) %loop over each cell in disps
     %xline(0)
 end
 view(2);   % Default 2-D view
+viscircles([0,0],30)
 colorbar;  % Add a colorbar
 colormap('jet')
 
