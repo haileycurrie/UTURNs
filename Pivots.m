@@ -93,12 +93,12 @@ elseif form=='distance'
     for j=1:length(tracks)
         xmin=find(disps{j,1}(:,2)==min(disps{j,1}(:,2))); %index at the pivot
         
-        priorframe=find(disps{j,1}(:,1)==prior); %find index of prior frame (may differ from prior+1 when track begins after t=0, etc)
+        priorframe=find(disps{j,1}(:,1)==disps{j,1}(xmin,1)-prior); %find index of prior frame (may differ from prior+1 when track begins after t=0, etc)
         
         %if the prior frame is before the track begins, or that frame is
         %skipped during tracking, take the nearest preceeding frame that does exist
         if isempty(priorframe)==1  
-            [~,nearest]=min(abs(disps{j,1}(:,1)-prior));
+            [~,nearest]=min(abs(disps{j,1}(:,1)-(disps{j,1}(xmin,1)-prior)));
             priorframe=nearest;
         end
 

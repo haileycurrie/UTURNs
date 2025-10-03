@@ -38,9 +38,9 @@ for j=1:length(tracks)
         dy = pivotY - initialY; % difference in y
         
         if dy > 0
-            posList(end+1) = tracks{j}(1,4); % add to positive list
+            posList(end+1) = j;%tracks{j}(1,4); % add to positive list
         else
-            negList(end+1) = tracks{j}(1,4); % add to negative list
+            negList(end+1) = j;%tracks{j}(1,4); % add to negative list
         end
 end
 
@@ -51,7 +51,7 @@ agreement_rate_0p=(length(up_pos)+length(down_neg))/length(disps)
 %% sign of dy from fpivot-k to pivot
 agreement_rate_kp=[];
 posList=[]; negList=[];
-for k=1:24
+for k=1:68
     posList=[]; negList=[];
     for j=1:length(tracks)
             xmin=find(disps{j,1}(:,2)==min(disps{j,1}(:,2))); %index at the pivot
@@ -67,9 +67,9 @@ for k=1:24
             dy = pivotY - prior; % difference in y
             
             if dy > 0
-                posList(end+1) = tracks{j}(1,4); % add to positive list
+                posList(end+1) = j;%tracks{j}(1,4); % add to positive list
             else
-                negList(end+1) = tracks{j}(1,4); % add to negative list
+                negList(end+1) = j;%tracks{j}(1,4); % add to negative list
             end
     end
     
@@ -81,7 +81,7 @@ end
 xax=1:k;
 figure
 plot(xax,agreement_rate_kp)
-yline(agreement_rate)
+yline(agreement_rate_0p)
 title('Agreement Rate of Sign(dy) vs k Frames Prior to Pivot')
 xlabel('k')
 ylabel('Fractional Agreement')
