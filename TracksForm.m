@@ -93,6 +93,9 @@ if isempty(Labels)==0
     
     for i=1:length(tracks)
         pos=floor(tracks{i}(1,2:3));
+        if pos(1)==0 || pos(2)==0
+            pos=ceil(tracks{i}(1,2:3));
+        end
         f=tracks{i}(1,1);
         tracks{i}(:,4)=labels(pos(2),pos(1),f+1);
     end

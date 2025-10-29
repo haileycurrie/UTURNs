@@ -44,6 +44,9 @@
 %   pivots: disps array truncated to the pivot rows: cell array, one cell 
 %       for each track. Each track contains 4 columns, in order: frame (t), 
 %       x pos, y pos, track ID.
+%
+%   xmins: array of the FRAMES at which each track reaches its extremum in
+%       x, IE, its pivot frame.
 % 
 %
 %Hailey Currie
@@ -51,11 +54,11 @@
 %
 
 
-function [pivots]=Pivots(tracks,disps,form,prior)
+function [pivots,xmins]=Pivots(tracks,disps,form,prior)
 
 %initialize empty cell array for just the pivots
 pivots=cell(length(tracks),1);
-
+xmins=NaN(1,length(tracks));
 if isnumeric(form)==1 
     df=form;
     
@@ -84,6 +87,7 @@ if isnumeric(form)==1
             pivots(j,:)=[];
             pivots=pivots(~cellfun('isempty',pivots));
         end
+        xmins(j)=disps{j,1}(xmin,1);
     end
 
 elseif form=='distance'
@@ -115,7 +119,7 @@ elseif form=='distance'
         pivottrack=[z x y ID];
         %enter the pivot track into the pivots cell array
         pivots(j,1)={pivottrack};
-
+        xmins(j)=disps{j,1}(xmin,1);
     end
 
 end

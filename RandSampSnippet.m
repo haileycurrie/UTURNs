@@ -7,7 +7,8 @@
 sample=randi([1,14816],1,50);
 figure
 tiledlayout(5,10);
-for i=sample
+for j=1:50%sample
+    i=list(j);
     hold off
     nexttile;
     hold on
@@ -17,7 +18,7 @@ for i=sample
              'EdgeColor', 'interp', ...  % Use interpolated color for edges
              'LineWidth', 0.2);
     view(2);
-    xlim([-45,45]);
+    xlim([-45,45]);   
     ylim([-45,45]);
     title(string(disps{i,1}(1,4)));
 end

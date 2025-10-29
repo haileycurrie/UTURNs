@@ -21,13 +21,15 @@
 %   downs: a list of track indices classified as down
 %
 %   fig: a tiled layout plot of each split track in trackset
+%
+%   AUCs: a list of areas under each curve, proxy for the width of a turn
 % 
 %
 %Hailey Currie
 %Summer 2025
 %
 
-function [ups, downs]=UDclasser(pivots,trackset,plt)
+function [ups, downs, dcurve]=UDclasser(pivots,trackset,plt)
 
 %trackset=1:length(tracks);
 %plt=0
