@@ -120,6 +120,11 @@ elseif form=='distance'
         %enter the pivot track into the pivots cell array
         pivots(j,1)={pivottrack};
         xmins(j)=disps{j,1}(xmin,1);
+        if size(pivots{j,1}(:,:),1)<3
+            pivots(j,:)=[];
+            pivots=pivots(~cellfun('isempty',pivots));
+        end
     end
-
+  
+        
 end
