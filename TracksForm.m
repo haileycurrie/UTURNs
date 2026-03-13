@@ -88,28 +88,28 @@ tracks=importTrackMateTracks(filename);
 
 %% Optionally, tag the tracks with Label IDs
 
-if isempty(Labels)==0
-    labels=tiffreadVolume(Labels);
+if isempty(Labels)==0 %if labels are provided
+    labels=tiffreadVolume(Labels); %then read in the label file
     
-    for i=1:length(tracks)
-        pos=floor(tracks{i}(1,2:3));
-        if pos(1)==0 || pos(2)==0
+    for i=1:length(tracks) %for each track:
+        pos=floor(tracks{i}(1,2:3)); %take the nearest pixel position (x,y may be subpixel) by rounding down. If that rounds to 0, round up:
+        if pos(1)==0 || pos(2)==0 
             pos=ceil(tracks{i}(1,2:3));
         end
-        f=tracks{i}(1,1);
-        tracks{i}(:,4)=labels(pos(2),pos(1),f+1);
+        f=tracks{i}(1,1); %find the first frame of the track, and use that frame to check the label
+        tracks{i}(:,4)=labels(pos(2),pos(1),f+1); %add a 4th column to the track and fill it with the label at the pixel position given by the track at frame f
     end
 end 
 
 %% crop at stimstart
-
-for i=1:length(tracks)
-    tracks{i,1}=tracks{i,1}((stimstart+1):end,:); %crop pre-stim control (set stimstart to 0 to include control in analysis)
+if stimstart~=0 %optionally crop out pre-stim control (default stimstart=0 to include control in tracks)
+    for i=1:length(tracks)
+        tracks{i,1}=tracks{i,1}((stimstart+1):end,:); 
+    end
 end
 
 %% remove tracks less than the minimum duration (see note in readme)
-I=find(cellfun(@length,tracks)>mindur);
-tracks=tracks(I);
+tracks=tracks(cellfun(@length,tracks)>mindur);
 
 
 %% create disps: set initial (x,y)=(0,0) for each track (a la hairball)
@@ -121,18 +121,17 @@ for i=1:size(tracks,1) %iterate over each track in the cell array
     disps{i,1}(:,3)=disps{i,1}(:,3)-disps{i,1}(1,3);
     
     %calculate frame-frame x and y displacements (velocity in px/frame)
-    for f=2:length(disps{i,1}(:,1)) %iterate over frames of track i
+    tracks{i,1}(1,5)=0;
+    tracks{i,1}(1,6)=0;
+    disps{i,1}(1,5)=0;
+    disps{i,1}(1,6)=0;
+    for f=1:length(disps{i,1}(:,1))-1 %iterate over frames of track i
         %calculate steps in x and y in column 5 and 6 ("velocity" in px/frame)
-        tracks{i,1}(1,5)=0;
-        tracks{i,1}(f,5)=disps{i,1}(f,2)-disps{i,1}(f-1,2);
-        tracks{i,1}(1,6)=0;
-        tracks{i,1}(f,6)=disps{i,1}(f,3)-disps{i,1}(f-1,3);
-        
-        % %smooth velocity by averaging over past 3 frames
-        % tracks{i,1}(1:4,7)=0;
-        % if f>4
-        % tracks{i,1}(f,7)=mean(tracks{i,1}(f-3:f,6));
-        % end
+        tracks{i,1}(f,5)=disps{i,1}(f+1,2)-disps{i,1}(f,2);
+        tracks{i,1}(f,6)=disps{i,1}(f+1,3)-disps{i,1}(f,3);
+        disps{i,1}(f,5)=disps{i,1}(f+1,2)-disps{i,1}(f,2);
+        disps{i,1}(f,6)=disps{i,1}(f+1,3)-disps{i,1}(f,3);
+
     end
 end
 

@@ -111,12 +111,14 @@ elseif form=='distance'
         [~,fend]=min(abs(disps{j,1}(xmin:end,2)-xprior)); %find the frame after the pivot that is nearest in x position to xprior
 
         %isolate pivot rows (xprior +/- dx) from disps
-        x=disps{j,1}(priorframe:xmin+fend-1,2)-disps{j,1}(priorframe,2); %second term sets initial position to 0
-        y=disps{j,1}(priorframe:xmin+fend-1,3)-disps{j,1}(priorframe,3); %second term sets initial position to 0
+        x=tracks{j,1}(priorframe:xmin+fend-1,2)-tracks{j,1}(priorframe,2); %second term sets initial position to 0
+        y=tracks{j,1}(priorframe:xmin+fend-1,3)-tracks{j,1}(priorframe,3); %second term sets initial position to 0
         z=tracks{j,1}(priorframe:xmin+fend-1,1);
+        dx=tracks{j,1}(priorframe:xmin+fend-1,5);
+        dy=tracks{j,1}(priorframe:xmin+fend-1,6);
         ID=disps{j,1}(1,4)*ones(length(x),1);
         %define the pivot track
-        pivottrack=[z x y ID];
+        pivottrack=[z x y ID dx dy];
         %enter the pivot track into the pivots cell array
         pivots(j,1)={pivottrack};
         xmins(j)=disps{j,1}(xmin,1);

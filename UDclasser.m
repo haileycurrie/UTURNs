@@ -42,7 +42,7 @@ if plt==1
 end
 
 %initialize arrays to store data
-dcurve=zeros(length(pivots),1);
+dcurve=NaN(length(pivots),1);
 ups=[];
 downs=[];
 
